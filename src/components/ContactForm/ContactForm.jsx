@@ -1,18 +1,25 @@
 import { Formik, Form, Field } from "formik";
 import { useId } from "react";
 import css from "./ContactForm.module.css";
+import { nanoid } from "nanoid";
 
-export default function ContactForm() {
+export default function ContactForm({ addContact }) {
   const nameId = useId();
   const numberId = useId();
+
   const standardValue = {
-    id: "",
     name: "",
     number: "",
   };
 
+  const handleSubmit = (value, actions) => {
+    const newContact = { id: nanoid(), ...value };
+    addContact(newContact);
+    actions.resetForm();
+  };
+
   return (
-    <Formik initialValues={standardValue} onSubmit={() => {}}>
+    <Formik initialValues={standardValue} onSubmit={handleSubmit}>
       <Form className={css.formField}>
         <div className={css.formPiece}>
           <label htmlFor={nameId}>Name</label>
@@ -26,6 +33,9 @@ export default function ContactForm() {
             id={numberId}
             type="tel"
           ></Field>
+          <button className={css.searchBut} type="submit">
+            Add contact
+          </button>
         </div>
       </Form>
     </Formik>
