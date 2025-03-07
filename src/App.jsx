@@ -21,8 +21,10 @@ function App() {
     setList((prevContact) => prevContact.filter((el) => el.id !== idCard));
   };
 
-  const findContact = list.filter((el) =>
-    el.text.toLowerCase().includes(filter.toLocaleLowerCase())
+  const findContact = list.filter(
+    (el) =>
+      el.name.toLowerCase().includes(filter.toLocaleLowerCase()) ||
+      el.number.includes(filter)
   );
 
   return (
